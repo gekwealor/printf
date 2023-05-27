@@ -16,7 +16,7 @@ int handle_write_char(char c, char buffer[],
 	int flags, int width, int precision, int size)
 {/* char is located at left and paddind at buffer's right */
 	int i = 0;
-	char padd = '';
+	char padd = ' ';
 
 	UNUSED(precision);
 	UNUSED(size);
@@ -72,7 +72,7 @@ int write_number(int is_negative, int ind, char buffer[],
 	else if (flags & F_PLUS)
 		extra_ch = '+';
 	else if (flags & F_SPACE)
-		extra_ch = '';
+		extra_ch = ' ';
 
 	return (write_num(ind, buffer, flags, width, precision,
 				length, padd, extra_ch));
