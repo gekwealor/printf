@@ -13,8 +13,8 @@
 int print_pointer(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	char extra_c = 0, padd = '';
-	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /*	       1 for '0x' */
+	char extra_c = 0, padd = ' ';
+	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /* length=2, for '0x' */
 	unsigned long num_addrs;
 	char map_to[] = "0123456789abcdef";
 	void *addrs = va_arg(types, void*);
@@ -29,16 +29,16 @@ int print_pointer(va_list types, char buffer[],
 
 	while (num_addrs > 0)
 	{
-		buffer[ind--] map_to[num_addrs % 16];
+		buffer[ind--] = map_to[num_addrs % 16];
 		num_addrs /= 16;
 		length++;
 	}
-	if ((flags & F_ZER0) && !(flags & F_MINUS))
+	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		padd = '0';
-	if (flag & F_PLUS)
+	if (flags & F_PLUS)
 		extra_c = '+', length++;
 	else if (flags & F_SPACE)
-		extra_c = '', length++;
+		extra_c = ' ', length++;
 	ind++;
 	/*return (write(1, &buffer[g], BUFF_SIZE - g - 1));*/
 	return (write_pointer(buffer, ind, length,
@@ -159,7 +159,7 @@ int print_rot13string(va_list types, char buffer[],
 		}
 		if (!in[k])
 		{
-			x = str[j];
+			x = str[g];
 			write(1, &x, 1);
 			count++;
 		}
